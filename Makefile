@@ -1,26 +1,26 @@
 # Makefile by Roberto M.F. (Roboe)
-# https://github.com/WeAreFairphone/flashabe-zip_emojione
+# https://github.com/WeAreFairphone/flashabe-zip_noto-emoji
 
 SOURCE       := ./src/
 SOURCEFILES  := $(shell find $(SOURCE) 2> /dev/null | sort)
 
-FLASHABLEZIP := ./build/emojione.zip
-RELEASENAME  := "emojione-v2_%Y-%m-%d.zip"
+NOTOEMOJI_VERSION := v2018-04-24-pistol-update
+NOTOEMOJI_FONT    := ./assets/NotoColorEmoji_$(NOTOEMOJI_VERSION).ttf
+NOTOEMOJI_URL     := https://github.com/googlei18n/noto-emoji/raw/$(NOTOEMOJI_VERSION)/fonts/NotoColorEmoji.ttf
+NOTOEMOJI_DEST    := ./src/noto-color-emoji.ttf
 
-EMOJIONE_VERSION := 2.2.7
-EMOJIONE_FONT    := ./assets/emojione-android_$(EMOJIONE_VERSION).ttf
-EMOJIONE_URL     := https://github.com/Ranks/emojione/raw/v$(EMOJIONE_VERSION)/assets/fonts/emojione-android.ttf
-EMOJIONE_DEST    := ./src/emojione-android.ttf
+FLASHABLEZIP := ./build/noto-color-emoji.zip
+RELEASENAME  := "noto-color-emoji-$(NOTOEMOJI_VERSION)_%Y-%m-%d.zip"
 
 
 .PHONY: all build clean release install
 all: build
 
 build: $(FLASHABLEZIP)
-$(FLASHABLEZIP): $(SOURCEFILES) $(EMOJIONE_FONT)
+$(FLASHABLEZIP): $(SOURCEFILES) $(NOTOEMOJI_FONT)
 	@echo "Building flashable ZIP..."
 	@mkdir -pv `dirname $(FLASHABLEZIP)`
-	@cp -f "$(EMOJIONE_FONT)" "$(EMOJIONE_DEST)"
+	@cp -f "$(NOTOEMOJI_FONT)" "$(NOTOEMOJI_DEST)"
 	@rm -f "$(FLASHABLEZIP)"
 	@cd "$(SOURCE)" && zip \
 		"../$(FLASHABLEZIP)" . \
@@ -28,17 +28,17 @@ $(FLASHABLEZIP): $(SOURCEFILES) $(EMOJIONE_FONT)
 		--exclude '*.asc' '*.xml'
 	@echo "Result: $(FLASHABLEZIP)"
 
-$(EMOJIONE_FONT):
-	@echo "Downloading emojione..."
-	@mkdir -pv `dirname $(EMOJIONE_FONT)`
+$(NOTOEMOJI_FONT):
+	@echo "Downloading noto-emoji..."
+	@mkdir -pv `dirname $(NOTOEMOJI_FONT)`
 	@curl \
-		-L "$(EMOJIONE_URL)" \
-		-o "$(EMOJIONE_FONT)" \
+		-L "$(NOTOEMOJI_URL)" \
+		-o "$(NOTOEMOJI_FONT)" \
 		--connect-timeout 30
 
 clean:
 	@echo Removing built files...
-	rm -f "$(EMOJIONE_DEST)"
+	rm -f "$(NOTOEMOJI_DEST)"
 	rm -f "$(FLASHABLEZIP)"
 	@# only remove dir if it's empty:
 	@rmdir -p `dirname $(FLASHABLEZIP)` 2>/dev/null || true

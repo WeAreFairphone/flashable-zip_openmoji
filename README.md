@@ -1,10 +1,9 @@
-EmojiOne v2 Installer
+Noto Emoji Installer
 ---
 
-**Flashable ZIP** to replace Android [emoji set](https://www.google.com/get/noto/help/emoji/) with [EmojiOne](https://www.emojione.com/emoji/v2). This also includes an OTA survival `addon.d` script.
+**Flashable ZIP** to update Android [emoji set](https://www.google.com/get/noto/help/emoji/) to the latest available, usually to the newest Android version. This also includes an OTA survival `addon.d` script.
 
-EmojiOne v2 is an emoji set more comprehensible than Android's one [before Marshmallow](http://blog.emojipedia.org/android-6-0-1-emoji-changelog/).  
-Version 2 of EmojiOne is the last [open and free](https://github.com/Ranks/emojione/blob/2.2.7/LICENSE.md) version of EmojiOne. EmojiOne v3 and later are **not open** to the public anymore.  
+Noto Emoji is the emoji set used by the Android system and it currently supports all emoji defined in the latest Unicode version (v10.0). Font is availabe under the [SIL Open Font License, version 1.1](https://github.com/googlei18n/noto-emoji/blob/master/fonts/LICENSE).
 The flashable ZIP saves a copy of the previous installed emoji on your device at `/system/fonts/NotoColorEmoji.ttf.old`.
 
 
@@ -16,14 +15,14 @@ Run:
 make build
 ```
 
-This will generate a `emojione.zip` in the `build/` folder.
+This will generate a `noto-emoji.zip` in the `build/` folder.
 
 To make a public release, run:
 ```
 make release
 ```
 
-This will generate a `emojione_YYYY-MM-DD.zip` file in the `releases/` folder.
+This will generate a `noto-emoji-{version}_YYYY-MM-DD.zip` file in the `releases/` folder.
 
 
 Install

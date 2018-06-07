@@ -30,11 +30,9 @@ ui_print() {
 
 ui_print "Getting ready..."
 
-WORK_FOLDER='emojione'
+WORK_FOLDER='noto-emoji'
 ZIP_FILE="$3"
 ADDOND='90-emoji.sh'
-ADDOND_OLD='90-emojione.sh'
-ADDOND_DIR='/system/addon.d'
 FONT_PATH='/system/fonts/NotoColorEmoji.ttf'
 
 cd /tmp
@@ -57,16 +55,15 @@ fi
 
 ui_print "Installing new emoji font..."
 
-cp emojione-android.ttf "$FONT_PATH"
+cp noto-color-emoji.ttf "$FONT_PATH"
 chmod 644 "$FONT_PATH"
 
 
 ui_print "Installing OTA survival script..."
 
-rm -f ${ADDOND_DIR}/${ADDOND_OLD}
 cp ${ADDOND} ${ADDOND_DIR}
 
 
-ui_print "Enjoy EmojiOne! Ü"
+ui_print "Enjoy Noto Emoji! Ü"
 
 umount /system
