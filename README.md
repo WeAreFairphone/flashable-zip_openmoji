@@ -1,4 +1,4 @@
-Noto Emoji Installer
+Noto Emoji Updater
 ---
 
 **Flashable ZIP** to update Android [emoji set](https://www.google.com/get/noto/help/emoji/) to the latest available, usually to the newest Android version. This also includes an OTA survival `addon.d` script.
