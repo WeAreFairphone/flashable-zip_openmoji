@@ -45,11 +45,14 @@ clean:
 	@# only remove dir if it's empty:
 	@rmdir -p `dirname $(FLASHABLEZIP)` 2>/dev/null || true
 
-release: $(RELEASEZIP)
+release: $(RELEASEZIP) $(RELEASESUM)
 $(RELEASEZIP): $(FLASHABLEZIP)
 	@mkdir -pv "$(@D)"
 	@echo -n "Release file: "
 	@cp -v "$(FLASHABLEZIP)" "$@"
+$(RELEASESUM): $(RELEASEZIP)
+	@echo "Release checksum: $@"
+	@cd "$(@D)" && sha256sum $(RELEASENAME) > $(@F)
 
 install: $(FLASHABLEZIP)
 	@echo "Waiting for ADB sideload mode"
