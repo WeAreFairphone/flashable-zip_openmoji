@@ -10,7 +10,9 @@ NOTOEMOJI_URL     := https://github.com/googlei18n/noto-emoji/raw/$(NOTOEMOJI_VE
 NOTOEMOJI_DEST    := ./src/noto-color-emoji.ttf
 
 FLASHABLEZIP := ./build/noto-color-emoji.zip
-RELEASENAME  := "noto-color-emoji-$(NOTOEMOJI_VERSION)_%Y-%m-%d.zip"
+RELEASENAME  := $(shell date +"noto-color-emoji-$(NOTOEMOJI_VERSION)_%Y-%m-%d.zip")
+RELEASEZIP   := release/$(RELEASENAME)
+RELEASESUM   := $(RELEASEZIP).sha256sum
 
 
 .PHONY: all build clean release install
@@ -19,21 +21,21 @@ all: build
 build: $(FLASHABLEZIP)
 $(FLASHABLEZIP): $(SOURCEFILES) $(NOTOEMOJI_FONT)
 	@echo "Building flashable ZIP..."
-	@mkdir -pv `dirname $(FLASHABLEZIP)`
+	@mkdir -pv "$(@D)"
 	@cp -f "$(NOTOEMOJI_FONT)" "$(NOTOEMOJI_DEST)"
-	@rm -f "$(FLASHABLEZIP)"
+	@rm -f "$@"
 	@cd "$(SOURCE)" && zip \
-		"../$(FLASHABLEZIP)" . \
+		"../$@" . \
 		--recurse-path \
 		--exclude '*.asc' '*.xml'
-	@echo "Result: $(FLASHABLEZIP)"
+	@echo "Result: $@"
 
 $(NOTOEMOJI_FONT):
 	@echo "Downloading noto-emoji..."
-	@mkdir -pv `dirname $(NOTOEMOJI_FONT)`
+	@mkdir -pv "$(@D)"
 	@curl \
 		-L "$(NOTOEMOJI_URL)" \
-		-o "$(NOTOEMOJI_FONT)" \
+		-o "$@" \
 		--connect-timeout 30
 
 clean:
@@ -43,9 +45,11 @@ clean:
 	@# only remove dir if it's empty:
 	@rmdir -p `dirname $(FLASHABLEZIP)` 2>/dev/null || true
 
-release: $(FLASHABLEZIP)
-	@mkdir -pv release
-	@cp -v "$(FLASHABLEZIP)" "release/$$(date +$(RELEASENAME))"
+release: $(RELEASEZIP)
+$(RELEASEZIP): $(FLASHABLEZIP)
+	@mkdir -pv "$(@D)"
+	@echo -n "Release file: "
+	@cp -v "$(FLASHABLEZIP)" "$@"
 
 install: $(FLASHABLEZIP)
 	@echo "Waiting for ADB sideload mode"
