@@ -4,7 +4,7 @@
 SOURCE       := ./src/
 SOURCEFILES  := $(shell find $(SOURCE) 2> /dev/null | sort)
 
-NOTOEMOJI_VERSION := v2018-04-24-pistol-update
+NOTOEMOJI_VERSION := v2018-08-10-unicode11
 NOTOEMOJI_FONT    := ./assets/NotoColorEmoji_$(NOTOEMOJI_VERSION).ttf
 NOTOEMOJI_URL     := https://github.com/googlei18n/noto-emoji/raw/$(NOTOEMOJI_VERSION)/fonts/NotoColorEmoji.ttf
 NOTOEMOJI_DEST    := ./src/noto-color-emoji.ttf
