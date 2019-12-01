@@ -30,7 +30,7 @@ ui_print() {
 
 ui_print "Getting ready..."
 
-WORK_FOLDER='noto-emoji'
+WORK_FOLDER='openmoji'
 ZIP_FILE="$3"
 ADDOND='90-emoji.sh'
 FONT_PATH='/system/fonts/NotoColorEmoji.ttf'
@@ -55,7 +55,7 @@ fi
 
 ui_print "Installing new emoji font..."
 
-cp noto-color-emoji.ttf "$FONT_PATH"
+cp openmoji-color.ttf "$FONT_PATH"
 chmod 644 "$FONT_PATH"
 
 
@@ -64,6 +64,6 @@ ui_print "Installing OTA survival script..."
 cp ${ADDOND} ${ADDOND_DIR}
 
 
-ui_print "Enjoy Noto Emoji! Ü"
+ui_print "Enjoy OpenMoji! Ü"
 
 umount /system

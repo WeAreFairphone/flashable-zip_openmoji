@@ -1,16 +1,16 @@
 # Makefile by Roberto M.F. (Roboe)
-# https://github.com/WeAreFairphone/flashabe-zip_noto-emoji
+# https://github.com/WeAreFairphone/flashabe-zip_openmoji
 
 SOURCE       := ./src/
 SOURCEFILES  := $(shell find $(SOURCE) 2> /dev/null | sort)
 
-NOTOEMOJI_VERSION := v2018-08-10-unicode11
-NOTOEMOJI_FONT    := ./assets/NotoColorEmoji_$(NOTOEMOJI_VERSION).ttf
-NOTOEMOJI_URL     := https://github.com/googlei18n/noto-emoji/raw/$(NOTOEMOJI_VERSION)/fonts/NotoColorEmoji.ttf
-NOTOEMOJI_DEST    := ./src/noto-color-emoji.ttf
+OPENMOJI_VERSION := 12.0.0
+OPENMOJI_FONT    := ./assets/OpenMoji-Color_$(OPENMOJI_VERSION).ttf
+OPENMOJI_URL     := https://github.com/hfg-gmuend/openmoji/raw/$(OPENMOJI_VERSION)/font/OpenMoji-Color.ttf
+OPENMOJI_DEST    := ./src/openmoji-color.ttf
 
-FLASHABLEZIP := ./build/noto-color-emoji.zip
-RELEASENAME  := $(shell date +"noto-color-emoji-$(NOTOEMOJI_VERSION)_%Y-%m-%d.zip")
+FLASHABLEZIP := ./build/openmoji-color.zip
+RELEASENAME  := $(shell date +"openmoji-color-$(OPENMOJI_VERSION)_%Y-%m-%d.zip")
 RELEASEZIP   := release/$(RELEASENAME)
 RELEASESUM   := $(RELEASEZIP).sha256sum
 
@@ -19,10 +19,10 @@ RELEASESUM   := $(RELEASEZIP).sha256sum
 all: build
 
 build: $(FLASHABLEZIP)
-$(FLASHABLEZIP): $(SOURCEFILES) $(NOTOEMOJI_FONT)
+$(FLASHABLEZIP): $(SOURCEFILES) $(OPENMOJI_FONT)
 	@echo "Building flashable ZIP..."
 	@mkdir -pv "$(@D)"
-	@cp -f "$(NOTOEMOJI_FONT)" "$(NOTOEMOJI_DEST)"
+	@cp -f "$(OPENMOJI_FONT)" "$(OPENMOJI_DEST)"
 	@rm -f "$@"
 	@cd "$(SOURCE)" && zip \
 		"../$@" . \
@@ -30,17 +30,17 @@ $(FLASHABLEZIP): $(SOURCEFILES) $(NOTOEMOJI_FONT)
 		--exclude '*.asc' '*.xml'
 	@echo "Result: $@"
 
-$(NOTOEMOJI_FONT):
-	@echo "Downloading noto-emoji..."
+$(OPENMOJI_FONT):
+	@echo "Downloading openmoji..."
 	@mkdir -pv "$(@D)"
 	@curl \
-		-L "$(NOTOEMOJI_URL)" \
+		-L "$(OPENMOJI_URL)" \
 		-o "$@" \
 		--connect-timeout 30
 
 clean:
 	@echo Removing built files...
-	rm -f "$(NOTOEMOJI_DEST)"
+	rm -f "$(OPENMOJI_DEST)"
 	rm -f "$(FLASHABLEZIP)"
 	@# only remove dir if it's empty:
 	@rmdir -p `dirname $(FLASHABLEZIP)` 2>/dev/null || true
